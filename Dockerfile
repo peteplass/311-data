@@ -1,16 +1,14 @@
-# base image
 FROM node:12.2.0-alpine
-
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@3.0.1 -g --silent
-
-# start app
-CMD ["npm", "start"]
+RUN npm install webpack webpack-cli -g
+WORKDIR /tmp
+COPY package.json /tmp/
+RUN npm config set registry http://registry.npmjs.org/ && npm install
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+RUN cp -a /tmp/node_modules /usr/src/app/
+RUN webpack
+ENV NODE_ENV=production
+ENV PORT=3000
+RUN ls
+CMD [ "node", "server.js" ]
+EXPOSE 3000
