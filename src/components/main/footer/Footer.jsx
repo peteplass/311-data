@@ -8,13 +8,15 @@ const footerTextStyle = {
 };
 
 const Footer = () => (
-  <nav
+  <footer
     className="navbar has-navbar-fixed-bottom"
     style={{
       position: 'fixed',
       bottom: '0',
       height: '45px',
       background: '#002449',
+      // Really high z-index here to ensure Footer is on top of modal
+      zIndex: '20000',
     }}
   >
     <div className="level has-text-centered">
@@ -24,7 +26,7 @@ const Footer = () => (
         </p>
       </div>
     </div>
-  </nav>
+  </footer>
 );
 
 export default Footer;
